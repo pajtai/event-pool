@@ -1,7 +1,7 @@
 # actions (current state: pre alpha) [![Build Status](https://travis-ci.org/pajtai/promised-actions.png?branch=master)](https://travis-ci.org/pajtai/promised-actions)
 ===
 
-The actions library is a way to coordinate multiple events / promise chains.
+The actions library is a way to coordinate multiple events / promise chains. It is a hooks library.
 
 You use the library to register callbacks that will be triggered when an action happens. When you trigger an action
 a promise is returned which is only resolved when all callbacks registered with the action are resolved. Callbacks
