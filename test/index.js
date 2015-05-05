@@ -52,10 +52,7 @@ describe('actions', function() {
 
             r1();
 
-            process.nextTick(function() {
-
-                promised.isPending().should.be.false;
-                promised.isFulfilled().should.be.true;
+            promised.then(function() {
                 done();
             });
         });
