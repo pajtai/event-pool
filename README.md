@@ -1,4 +1,5 @@
-# actions (current state: pre alpha)
+# actions (current state: pre alpha) [![Build Status](https://travis-ci.org/pajtai/promised-actions.png?branch=master)](https://travis-ci.org/pajtai/promised-actions)
+===
 
 The actions library is a way to coordinate multiple events / promise chains.
 
