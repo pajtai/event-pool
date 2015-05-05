@@ -1,4 +1,4 @@
-# actions
+# actions (current state: pre alpha)
 
 The actions library is a way to coordinate multiple events / promise chains.
 
