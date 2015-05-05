@@ -1,0 +1,29 @@
+{
+  "name": "upsert",
+  "version": "0.0.3",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pajtai/upsert.git"
+  },
+  "author": "Peter Ajtai <peter.ajtai@thinksolid.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pajtai/upsert/issues"
+  },
+  "homepage": "https://github.com/pajtai/upsert",
+  "dependencies": {
+    "bluebird": "^2.9.25",
+    "lodash": "^3.3.1",
+    "sinon": "^1.14.1",
+    "sinon-chai": "^2.7.0"
+  },
+  "devDependencies": {
+    "chai": "^2.1.0",
+    "mocha": "^2.1.0"
+  }
+}
