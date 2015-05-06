@@ -1,6 +1,7 @@
 'use strict';
 
 var BB = require('bluebird');
+BB.longStackTraces();
 
 module.exports = {
     create: create
@@ -26,6 +27,9 @@ function register(actionName, callback, label) {
 function trigger(actionName, payload) {
     return BB
         .map(this[actionName], function(action) {
-            return BB.resolve(action.callback());
+            var callback = action.callback;
+            return callback instanceof BB ?
+                callback :
+                BB.resolve(callback());
         });
 }
