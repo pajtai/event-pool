@@ -12,47 +12,29 @@ chai.use(sinonChai);
 
 describe('actions', function() {
 
+    afterEach(function() {
+        actions.clear();
+    });
+
     describe('register', function() {
         it('returns total number of registrations', function() {
 
-            var test = actions.create();
-            test.register('test', function() {}).should.equal(1);
-            test.register('test', function() {}).should.equal(2);
+            actions.register('test', function() {}).should.equal(1);
+            actions.register('test', function() {}).should.equal(2);
         });
     });
 
     describe('trigger', function() {
-        it('fires the registered callbacks', function() {
-            var cb = sinon.spy(),
-                test = actions.create();
+        it('fires the registered callbacks', function(done) {
+            var cb = sinon.spy();
 
-            test.register('test', cb);
+            actions.register('test', cb);
 
-            test.trigger('test');
+            actions.trigger('test');
 
             process.nextTick(function() {
                 cb.should.have.been.called;
-            });
-        });
-
-        it('raw promises can be passed', function(done) {
-            var r,
-                p = new BB(function(resolve) {
-                    r = resolve
-                }),
-                test = actions.create();
-
-            test.register('test', p);
-
-            test
-                .trigger('test')
-                .then(function() {
-                    done();
-                });
-
-            process.nextTick(function() {
-                p.isPending().should.be.true;
-                r();
+                done();
             });
         });
 
@@ -66,15 +48,14 @@ describe('actions', function() {
                 r2 = resolve;
             });
 
-            test = actions.create();
-            test.register('test', function() {
+            actions.register('test', function() {
                 return p1;
             });
-            test.register('test', function() {
+            actions.register('test', function() {
                 return p2;
             });
 
-            promised = test.trigger('test');
+            promised = actions.trigger('test');
 
             process.nextTick(function() {
                 promised.isPending().should.be.true;
@@ -88,21 +69,22 @@ describe('actions', function() {
                         return p2;
                     })
                     .then(function() {
-                        promised.isResolved().should.be.true;
-                        done();
+                        promised
+                            .then(function() {
+                                done();
+                            });
                     });
             });
         });
 
         it('propagates errors', function(done) {
-            var p1, r1, p2, r2, test, promised;
+            var p1, r1, test;
 
             p1 = new BB(function(resolve) {
                 r1 = resolve;
             });
 
-            test = actions.create();
-            test.register('test', function() {
+            actions.register('test', function() {
                 return p1
                     .then(function() {
                         throw new Error('whoops');
@@ -111,12 +93,87 @@ describe('actions', function() {
 
             r1();
 
-            test
+            actions
                 .trigger('test')
                 .catch(function(error) {
                     error.message.should.equal('whoops');
                     done();
                 });
+        });
+
+        describe('payloads', function() {
+            it('can pass arguments to callback using labels', function(done) {
+
+                actions.register('math', function(num) {
+                    return num * num;
+                }, 'square');
+
+                actions
+                    .trigger('math', {
+                        square : 3
+                    })
+                    .then(function(response) {
+                        response.square.should.deep.equal( [ 9 ] );
+                        done();
+                    });
+            });
+
+            it('can mix async and sync callbacks', function(done) {
+
+                actions.register('math', function(num) {
+                    return num * num;
+                }, 'square');
+
+                actions.register('math', function(num) {
+                    return new BB(function (resolve) {
+                        process.nextTick(function() {
+                            return resolve(num * num);
+                        });
+                    });
+                }, 'square');
+
+                actions
+                    .trigger('math', {
+                        square : 3
+                    })
+                    .then(function(response) {
+                        response.square.should.deep.equal( [ 9, 9 ] );
+                        done();
+                    });
+            });
+        });
+    });
+
+    describe('info', function() {
+        it('returns the total number of registered hooks for an action name', function() {
+            actions.register('test', function() {});
+            actions.info('test').should.deep.equal({
+                count: 1,
+                labels: []
+            });
+            actions.register('test', function() {});
+            actions.info('test').should.deep.equal({
+                count: 2,
+                labels: []
+            })
+        });
+
+        it('return the label used', function() {
+            actions.register('test', function() {}, 'zeta');
+            actions.info('test').should.deep.equal({
+                count: 1,
+                labels: ['zeta']
+            });
+        });
+
+        it('return all the labels used in order of registration', function() {
+            actions.register('test', function() {}, 'zulu');
+            actions.register('test', function() {}, 'alpha');
+            actions.register('test', function() {}, 'tango');
+            actions.info('test').should.deep.equal({
+                count: 3,
+                labels: ['zulu', 'alpha', 'tango']
+            });
         });
     });
 });

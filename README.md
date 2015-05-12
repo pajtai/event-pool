@@ -1,6 +1,14 @@
 # actions (current state: pre alpha) [![Build Status](https://travis-ci.org/pajtai/promised-actions.png?branch=master)](https://travis-ci.org/pajtai/promised-actions)
 ===
 
+This event library is made to handle situations where the triggering of an even requires a
+confirmation that the event was responded to.
+
+
+
+This library is to give you the ability to repeatedly call a group of methods wrapped together
+by Promise.map. The methods can be called with arguments.
+
 The actions library is a way to coordinate multiple events / promise chains. It is a hooks library.
 
 You use the library to register callbacks that will be triggered when an action happens. When you trigger an action
