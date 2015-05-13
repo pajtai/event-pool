@@ -77,6 +77,37 @@ describe('actions', function() {
             });
         });
 
+        it('runs the hooks in parallel in the order registered', function(done) {
+            var p1, r1, test, promised, spy = sinon.spy();
+
+            p1 = new BB(function(resolve) {
+                r1 = resolve;
+            });
+
+            actions.register('test', function() {
+                spy('first hook');
+                return p1;
+            });
+
+            actions.register('test', function() {
+                spy('second hook');
+                return 42;
+            }, 'answer');
+
+            promised = actions.trigger('test');
+
+            process.nextTick(function() {
+                spy.args.length.should.equal(2);
+                spy.args[0][0].should.equal('first hook');
+                spy.args[1][0].should.equal('second hook');
+                r1();
+            });
+
+            promised.then(function(response) {
+                done();
+            });
+        });
+
         it('propagates errors', function(done) {
             var p1, r1, test;
 

@@ -40,10 +40,11 @@ function register(actionName, callback, label) {
 
 function trigger(actionName, payload) {
 
+    var response = {};
     payload = payload || {};
 
     return BB
-        .reduce(this.actions[actionName], function (response, action) {
+        .map(this.actions[actionName], function (action) {
             var callback = action.callback,
                 label = action.label,
                 res;
@@ -65,7 +66,10 @@ function trigger(actionName, payload) {
                     });
             }
 
-        }, {})
+        })
+        .then(function(r) {
+            return response;
+        })
 
 }
 
