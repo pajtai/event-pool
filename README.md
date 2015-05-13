@@ -76,3 +76,7 @@ events
 
 If you need to run several callbacks in a series, string them together with a promise chain, and register the whole
 chain. If you need to run several callbacks in parallel, register each one.
+
+### TODO:
+
+Remove listener / listeners method.
