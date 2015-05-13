@@ -1,4 +1,4 @@
-# event-event (current state: pre alpha) [![Build Status](https://travis-ci.org/pajtai/promised-actions.png?branch=master)](https://travis-ci.org/pajtai/promised-actions)
+# event-pool [![Build Status](https://travis-ci.org/pajtai/event-pool.png?branch=master)](https://travis-ci.org/pajtai/event-pool)
 ===
 
 This is an event library in which event triggering is followed by optional confirmation that the events were responded to. Events can also return values.
@@ -51,7 +51,7 @@ events.register('group', function(add) {
 events.register('group', function() {
   return BB
     .delay(500)
-    .resolve('http');
+    .then(function() { return 'http'; });
 }, 'url');
 
 events
