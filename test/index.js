@@ -30,9 +30,9 @@ describe('actions', function() {
 
             actions.register('test', cb);
 
-            actions.trigger('test');
-
-            process.nextTick(function() {
+            actions
+              .trigger('test')
+              .then(function() {
                 cb.should.have.been.called;
                 done();
             });
@@ -94,18 +94,17 @@ describe('actions', function() {
                 return 42;
             }, 'answer');
 
-            promised = actions.trigger('test');
-
-            process.nextTick(function() {
+            actions
+              .trigger('test')
+              .then(function() {
                 spy.args.length.should.equal(2);
                 spy.args[0][0].should.equal('first hook');
                 spy.args[1][0].should.equal('second hook');
-                r1();
-            });
+                done()
+              })
+              .catch(done);
 
-            promised.then(function(response) {
-                done();
-            });
+            r1();
         });
 
         it('propagates errors', function(done) {
