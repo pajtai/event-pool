@@ -51,7 +51,7 @@ events.register('group', function(add) {
 events.register('group', function() {
   return BB
     .delay(500)
-    .resolve('http');
+    .then(function() { return 'http'; });
 }, 'url');
 
 events
