@@ -18,7 +18,7 @@ var events = require('event-pool');
 1 === events.register('group', function() {...}, 'label');
 ```
 
-Events are triggered in the order registered. All event callbacks are called in order. The trigger  event returns a promise, and this promise is only resolved once all the promises returned by the callbacks - if any - are resolved.
+Events are triggered in the order registered. All event callbacks are called in order without waiting for resolution of any returned promises. The trigger  event returns a promise, and this promise is only resolved once all the promises returned by the callbacks - if any - are resolved.
 
 ```javascript
 var events = require('event-pool');
