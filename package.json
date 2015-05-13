@@ -1,6 +1,6 @@
 {
-  "name": "upsert",
-  "version": "0.0.3",
+  "name": "event-pool",
+  "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,22 +8,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pajtai/upsert.git"
+    "url": "https://github.com/pajtai/event-pool.git"
   },
   "author": "Peter Ajtai <peter.ajtai@thinksolid.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pajtai/upsert/issues"
+    "url": "https://github.com/pajtai/event-pool/issues"
   },
-  "homepage": "https://github.com/pajtai/upsert",
+  "homepage": "https://github.com/pajtai/event-pool",
   "dependencies": {
-    "bluebird": "^2.9.25",
-    "lodash": "^3.3.1",
-    "sinon": "^1.14.1",
-    "sinon-chai": "^2.7.0"
+    "bluebird": "^2.9.25"
   },
   "devDependencies": {
     "chai": "^2.1.0",
-    "mocha": "^2.1.0"
+    "mocha": "^2.1.0",
+    "sinon": "^1.14.1",
+    "sinon-chai": "^2.7.0"
   }
 }
