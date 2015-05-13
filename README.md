@@ -1,4 +1,4 @@
-# event-event (current state: pre alpha) [![Build Status](https://travis-ci.org/pajtai/event-pool.png?branch=master)](https://travis-ci.org/pajtai/event-pool)
+# event-pool [![Build Status](https://travis-ci.org/pajtai/event-pool.png?branch=master)](https://travis-ci.org/pajtai/event-pool)
 ===
 
 This is an event library in which event triggering is followed by optional confirmation that the events were responded to. Events can also return values.
