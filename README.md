@@ -1,7 +1,7 @@
 # event-pool [![Build Status](https://travis-ci.org/pajtai/event-pool.png?branch=master)](https://travis-ci.org/pajtai/event-pool)
 ===
 
-This is an event library in which event triggering is followed by optional confirmation that the events were responded to. Events can also return values.
+This is an event library in which event triggering is followed by optional confirmation that the events were responded to. Events can return values immediately or via promises, and events may be passed arguments.
 
 The library is a singleton, so it can be used to coordinate among multiple modules.
 
