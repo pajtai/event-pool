@@ -135,18 +135,19 @@ describe('actions', function() {
         describe('payloads', function() {
             it('can pass arguments to callback using labels', function(done) {
 
-                actions.register('math', function(num) {
-                    return num * num;
-                }, 'square');
+                actions.register('math', function(numa, numb) {
+                    return numa * numb;
+                }, 'multiply');
 
                 actions
                     .trigger('math', {
-                        square : 3
+                        multiply : [3, 2]
                     })
                     .then(function(response) {
-                        response.square.should.deep.equal( [ 9 ] );
+                        response.multiply.should.deep.equal( [ 6 ] );
                         done();
-                    });
+                    })
+                    .catch(done);
             });
 
             it('can mix async and sync callbacks', function(done) {
@@ -165,7 +166,7 @@ describe('actions', function() {
 
                 actions
                     .trigger('math', {
-                        square : 3
+                        square : [3]
                     })
                     .then(function(response) {
                         response.square.should.deep.equal( [ 9, 9 ] );

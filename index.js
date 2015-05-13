@@ -50,7 +50,7 @@ function trigger(actionName, payload) {
                 res;
 
             if (payload[label]) {
-                res = callback(payload[label]);
+                res = callback.apply(callback, payload[label]);
                 response[label] = response[label] || [];
                 return BB
                     .resolve(res)
