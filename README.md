@@ -3,6 +3,8 @@
 
 This is an event library in which event triggering is followed by optional confirmation that the events were responded to. Events can return values immediately or via promises, and events may be passed arguments.
 
+The library works on node and should work via browserify.
+
 ===
 
 The library is a singleton, so it can be used to coordinate among multiple modules.
